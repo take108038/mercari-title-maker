@@ -33,21 +33,27 @@
       border-radius: 5px;
       border: 1px solid #ccc;
     }
-    textarea, button, select {
+    textarea, select {
       width: 100%;
       max-width: 500px;
     }
-    button {
+    .button-row {
+      display: flex;
+      gap: 0.5em;
+      margin-top: 1em;
+      flex-wrap: wrap;
+    }
+    .button-row button {
       background-color: #1d3557;
       color: white;
-      margin-top: 1em;
-      padding: 0.8em;
+      padding: 0.5em 1em;
       cursor: pointer;
       transition: background-color 0.3s;
       border-radius: 5px;
-      font-size: 1em;
+      font-size: 0.9em;
+      border: none;
     }
-    button:hover {
+    .button-row button:hover {
       background-color: #457b9d;
     }
     textarea {
@@ -81,7 +87,7 @@
     </select>
   </div>
   <div class="form-group"><label for="brand">ブランド・型番：</label><input type="text" id="brand"></div>
-  <div class="form-group"><label for="accessory">付属品：</label><input type="text" id="accessory"></div>
+  <div class="form-group"><label for="accessory">付属品：</label><input type="text" id="accessory" placeholder="例：充電器、説明書など"></div>
 
   <div class="form-group"><label for="template">説明テンプレ：</label>
     <select id="template" class="template-select">
@@ -91,9 +97,11 @@
     </select>
   </div>
 
-  <button onclick="generateTitleAndDescription()">タイトル＆説明文生成</button>
-  <button onclick="copyToClipboard('result')">タイトルコピー</button>
-  <button onclick="copyToClipboard('description')">説明文コピー</button>
+  <div class="button-row">
+    <button onclick="generateTitleAndDescription()">生成</button>
+    <button onclick="copyToClipboard('result')">タイトルコピー</button>
+    <button onclick="copyToClipboard('description')">説明文コピー</button>
+  </div>
 
   <h2>生成結果</h2>
   <p><strong>タイトル：</strong><span id="result"></span></p>
@@ -109,7 +117,7 @@
 
       let title = `${condition} ${product}`;
       if (brand) title += ` ${brand}`;
-      if (accessory) title += ` ${accessory}`;
+      if (accessory && accessory !== 'なし') title += ` ${accessory}`;
       title += ' 即購入OK 送料無料';
 
       if (title.length > 40) {
@@ -125,14 +133,18 @@
         description += `${product}を出品いたします。\n\n`;
         description += `【商品の状態】\n- 状態：${condition}`;
         if (brand) description += `\n- ブランド・型番：${brand}`;
-        if (accessory) description += `\n- 付属品：${accessory}`;
+        if (accessory && accessory !== 'なし') {
+          description += `\n- 付属品：${accessory}`;
+        } else {
+          description += `\n- 付属品：なし`;
+        }
         description += `\n\n動作確認済み、初期化済みです。\n\n即購入歓迎いたします。よろしくお願いいたします。`;
       } else if (template === 'casual') {
         description += `ご覧いただきありがとうございます！\n\n`;
         description += `${product}、${condition}です！`;
         if (brand) description += `\nブランドは${brand}。`;
-        if (accessory) {
-          description += `\n付属品は${accessory}あります！`;
+        if (accessory && accessory !== 'なし') {
+          description += `\n付属品は${accessory}です！`;
         } else {
           description += `\n付属品はありません。`;
         }
@@ -140,7 +152,11 @@
       } else if (template === 'short') {
         description += `${product}。${condition}。`;
         if (brand) description += ` ${brand}。`;
-        if (accessory) description += ` 付属品：${accessory}。`;
+        if (accessory && accessory !== 'なし') {
+          description += ` 付属品：${accessory}。`;
+        } else {
+          description += ` 付属品：なし。`;
+        }
         description += `\n\n初期化・動作確認済。即購入可。`;
       }
 
@@ -148,13 +164,13 @@
     }
 
     function copyToClipboard(type) {
-      if (type === 'result') {
-        const text = document.getElementById('result').innerText;
-        navigator.clipboard.writeText(text).then(() => alert('タイトルをコピーしました'));
-      } else if (type === 'description') {
-        const text = document.getElementById('description').value;
-        navigator.clipboard.writeText(text).then(() => alert('説明文をコピーしました'));
-      }
+      const text = (type === 'result')
+        ? document.getElementById('result').innerText
+        : document.getElementById('description').value;
+
+      navigator.clipboard.writeText(text).then(() => {
+        alert(type === 'result' ? 'タイトルをコピーしました' : '説明文をコピーしました');
+      });
     }
   </script>
 </body>
