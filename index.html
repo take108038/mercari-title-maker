@@ -1,15 +1,57 @@
-
+// メルカリ 売れるタイトルメーカー（カラフル＆スタイリング追加）
 <!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>メルカリ 売れるタイトルメーカー</title>
+  <style>
+    body {
+      font-family: 'Helvetica Neue', sans-serif;
+      background: #f5f7fa;
+      padding: 2em;
+      color: #333;
+    }
+    h1 {
+      color: #e63946;
+    }
+    label {
+      display: block;
+      margin: 1em 0 0.5em;
+    }
+    input, select, textarea, button {
+      padding: 0.6em;
+      font-size: 1em;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      width: 100%;
+      max-width: 500px;
+    }
+    button {
+      background-color: #1d3557;
+      color: white;
+      margin-top: 1.5em;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #457b9d;
+    }
+    textarea {
+      white-space: pre-wrap;
+      height: 180px;
+    }
+    #result {
+      font-weight: bold;
+      color: #2a9d8f;
+      margin: 1em 0;
+    }
+  </style>
 </head>
 <body>
   <h1>メルカリ 売れるタイトルメーカー</h1>
 
-  <label>商品名：<input type="text" id="product"></label><br>
+  <label>商品名：<input type="text" id="product"></label>
   <label>状態：
     <select id="condition">
       <option value="新品">新品</option>
@@ -17,9 +59,9 @@
       <option value="中古">中古</option>
       <option value="ジャンク">ジャンク</option>
     </select>
-  </label><br>
-  <label>ブランド・型番：<input type="text" id="brand"></label><br>
-  <label>付属品：<input type="text" id="accessory"></label><br>
+  </label>
+  <label>ブランド・型番：<input type="text" id="brand"></label>
+  <label>付属品：<input type="text" id="accessory"></label>
 
   <button onclick="generateTitleAndDescription()">タイトル＆説明文生成</button>
 
@@ -48,11 +90,11 @@
       document.getElementById('result').innerText = title;
 
       let description = `ご覧いただきありがとうございます。\n\n`;
-      description += `${product}を出品いたします。\n`;
-      description += `状態は「${condition}」です。`;
-      if (brand) description += ` ブランド・型番は「${brand}」です。`;
-      if (accessory) description += ` 付属品は「${accessory}」となります。`;
-      description += `\n\n動作確認済み、初期化済みです。\n即購入歓迎いたします。よろしくお願いいたします。`;
+      description += `${product}を出品いたします。\n\n`;
+      description += `【商品の状態】\n- 状態：${condition}`;
+      if (brand) description += `\n- ブランド・型番：${brand}`;
+      if (accessory) description += `\n- 付属品：${accessory}`;
+      description += `\n\n動作確認済み、初期化済みです。\n\n即購入歓迎いたします。よろしくお願いいたします。`;
 
       document.getElementById('description').value = description;
     }
