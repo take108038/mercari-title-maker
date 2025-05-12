@@ -15,15 +15,25 @@
     h1 {
       color: #e63946;
     }
-    label {
-      display: block;
-      margin: 1em 0 0.5em;
+    .form-group {
+      display: flex;
+      align-items: center;
+      margin: 1em 0;
+      max-width: 500px;
     }
-    input, select, textarea, button {
+    .form-group label {
+      flex: 0 0 130px;
+      margin-right: 1em;
+    }
+    .form-group input,
+    .form-group select {
+      flex: 1;
       padding: 0.6em;
       font-size: 1em;
       border-radius: 5px;
       border: 1px solid #ccc;
+    }
+    textarea, button {
       width: 100%;
       max-width: 500px;
     }
@@ -31,8 +41,11 @@
       background-color: #1d3557;
       color: white;
       margin-top: 1.5em;
+      padding: 0.8em;
       cursor: pointer;
       transition: background-color 0.3s;
+      border-radius: 5px;
+      font-size: 1em;
     }
     button:hover {
       background-color: #457b9d;
@@ -40,6 +53,10 @@
     textarea {
       white-space: pre-wrap;
       height: 180px;
+      padding: 0.6em;
+      font-size: 1em;
+      border-radius: 5px;
+      border: 1px solid #ccc;
     }
     #result {
       font-weight: bold;
@@ -51,17 +68,17 @@
 <body>
   <h1>メルカリ 売れるタイトルメーカー</h1>
 
-  <label>商品名：<input type="text" id="product"></label>
-  <label>状態：
+  <div class="form-group"><label for="product">商品名：</label><input type="text" id="product"></div>
+  <div class="form-group"><label for="condition">状態：</label>
     <select id="condition">
       <option value="新品">新品</option>
       <option value="美品">美品</option>
       <option value="中古">中古</option>
       <option value="ジャンク">ジャンク</option>
     </select>
-  </label>
-  <label>ブランド・型番：<input type="text" id="brand"></label>
-  <label>付属品：<input type="text" id="accessory"></label>
+  </div>
+  <div class="form-group"><label for="brand">ブランド・型番：</label><input type="text" id="brand"></div>
+  <div class="form-group"><label for="accessory">付属品：</label><input type="text" id="accessory"></div>
 
   <button onclick="generateTitleAndDescription()">タイトル＆説明文生成</button>
 
