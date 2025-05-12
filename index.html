@@ -131,7 +131,11 @@
         description += `ご覧いただきありがとうございます！\n\n`;
         description += `${product}、${condition}です！`;
         if (brand) description += `\nブランドは${brand}。`;
-        if (accessory) description += `\n付属品は${accessory}あります！`;
+        if (accessory) {
+          description += `\n付属品は${accessory}あります！`;
+        } else {
+          description += `\n付属品はありません。`;
+        }
         description += `\n\nすぐ発送します！質問あれば気軽にどうぞ♪`;
       } else if (template === 'short') {
         description += `${product}。${condition}。`;
