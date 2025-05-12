@@ -1,0 +1,61 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>メルカリ 売れるタイトルメーカー</title>
+</head>
+<body>
+  <h1>メルカリ 売れるタイトルメーカー</h1>
+
+  <label>商品名：<input type="text" id="product"></label><br>
+  <label>状態：
+    <select id="condition">
+      <option value="新品">新品</option>
+      <option value="美品">美品</option>
+      <option value="中古">中古</option>
+      <option value="ジャンク">ジャンク</option>
+    </select>
+  </label><br>
+  <label>ブランド・型番：<input type="text" id="brand"></label><br>
+  <label>付属品：<input type="text" id="accessory"></label><br>
+
+  <button onclick="generateTitleAndDescription()">タイトル＆説明文生成</button>
+
+  <h2>生成結果</h2>
+  <p><strong>タイトル：</strong><span id="result"></span></p>
+  <p><strong>説明文：</strong><br><textarea id="description" rows="10" cols="60"></textarea></p>
+
+  <script>
+    function generateTitleAndDescription() {
+      const product = document.getElementById('product').value.trim();
+      const condition = document.getElementById('condition').value;
+      const brand = document.getElementById('brand').value.trim();
+      const accessory = document.getElementById('accessory').value.trim();
+
+      let title = `${condition} ${product}`;
+      if (brand) title += ` ${brand}`;
+      if (accessory) title += ` ${accessory}`;
+      title += ' 即購入OK 送料無料';
+
+      if (title.length > 40) {
+        title += `\n（${title.length}文字）※40文字超過`;
+      } else {
+        title += `\n（${title.length}文字）`;
+      }
+
+      document.getElementById('result').innerText = title;
+
+      let description = `ご覧いただきありがとうございます。\n\n`;
+      description += `${product}を出品いたします。\n`;
+      description += `状態は「${condition}」です。`;
+      if (brand) description += ` ブランド・型番は「${brand}」です。`;
+      if (accessory) description += ` 付属品は「${accessory}」となります。`;
+      description += `\n\n動作確認済み、初期化済みです。\n即購入歓迎いたします。よろしくお願いいたします。`;
+
+      document.getElementById('description').value = description;
+    }
+  </script>
+</body>
+</html>
