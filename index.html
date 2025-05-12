@@ -1,4 +1,4 @@
-// メルカリ 売れるタイトルメーカー（カラフル＆スタイリング追加）
+// メルカリ 売れるタイトルメーカー（多機能版）
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -33,14 +33,14 @@
       border-radius: 5px;
       border: 1px solid #ccc;
     }
-    textarea, button {
+    textarea, button, select {
       width: 100%;
       max-width: 500px;
     }
     button {
       background-color: #1d3557;
       color: white;
-      margin-top: 1.5em;
+      margin-top: 1em;
       padding: 0.8em;
       cursor: pointer;
       transition: background-color 0.3s;
@@ -63,6 +63,9 @@
       color: #2a9d8f;
       margin: 1em 0;
     }
+    .template-select {
+      margin-top: 1em;
+    }
   </style>
 </head>
 <body>
@@ -80,7 +83,17 @@
   <div class="form-group"><label for="brand">ブランド・型番：</label><input type="text" id="brand"></div>
   <div class="form-group"><label for="accessory">付属品：</label><input type="text" id="accessory"></div>
 
+  <div class="form-group"><label for="template">説明テンプレ：</label>
+    <select id="template" class="template-select">
+      <option value="basic">基本（ていねい）</option>
+      <option value="casual">カジュアル</option>
+      <option value="short">簡潔（業者風）</option>
+    </select>
+  </div>
+
   <button onclick="generateTitleAndDescription()">タイトル＆説明文生成</button>
+  <button onclick="copyToClipboard('result')">タイトルコピー</button>
+  <button onclick="copyToClipboard('description')">説明文コピー</button>
 
   <h2>生成結果</h2>
   <p><strong>タイトル：</strong><span id="result"></span></p>
@@ -92,6 +105,7 @@
       const condition = document.getElementById('condition').value;
       const brand = document.getElementById('brand').value.trim();
       const accessory = document.getElementById('accessory').value.trim();
+      const template = document.getElementById('template').value;
 
       let title = `${condition} ${product}`;
       if (brand) title += ` ${brand}`;
@@ -103,17 +117,40 @@
       } else {
         title += `\n（${title.length}文字）`;
       }
-
       document.getElementById('result').innerText = title;
 
-      let description = `ご覧いただきありがとうございます。\n\n`;
-      description += `${product}を出品いたします。\n\n`;
-      description += `【商品の状態】\n- 状態：${condition}`;
-      if (brand) description += `\n- ブランド・型番：${brand}`;
-      if (accessory) description += `\n- 付属品：${accessory}`;
-      description += `\n\n動作確認済み、初期化済みです。\n\n即購入歓迎いたします。よろしくお願いいたします。`;
+      let description = '';
+      if (template === 'basic') {
+        description += `ご覧いただきありがとうございます。\n\n`;
+        description += `${product}を出品いたします。\n\n`;
+        description += `【商品の状態】\n- 状態：${condition}`;
+        if (brand) description += `\n- ブランド・型番：${brand}`;
+        if (accessory) description += `\n- 付属品：${accessory}`;
+        description += `\n\n動作確認済み、初期化済みです。\n\n即購入歓迎いたします。よろしくお願いいたします。`;
+      } else if (template === 'casual') {
+        description += `ご覧いただきありがとうございます！\n\n`;
+        description += `${product}、${condition}です！`;
+        if (brand) description += `\nブランドは${brand}。`;
+        if (accessory) description += `\n付属品は${accessory}あります！`;
+        description += `\n\nすぐ発送します！質問あれば気軽にどうぞ♪`;
+      } else if (template === 'short') {
+        description += `${product}。${condition}。`;
+        if (brand) description += ` ${brand}。`;
+        if (accessory) description += ` 付属品：${accessory}。`;
+        description += `\n\n初期化・動作確認済。即購入可。`;
+      }
 
       document.getElementById('description').value = description;
+    }
+
+    function copyToClipboard(type) {
+      if (type === 'result') {
+        const text = document.getElementById('result').innerText;
+        navigator.clipboard.writeText(text).then(() => alert('タイトルをコピーしました'));
+      } else if (type === 'description') {
+        const text = document.getElementById('description').value;
+        navigator.clipboard.writeText(text).then(() => alert('説明文をコピーしました'));
+      }
     }
   </script>
 </body>
