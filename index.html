@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>メルカリ 売れるタイトルメーカー</title>
   <style>
     body { font-family: 'Helvetica Neue', sans-serif; background: #f5f7fa; padding: 2em; color: #333; }
@@ -40,16 +40,13 @@
     }
     textarea {
       white-space: pre-wrap;
-      height: 180px;
+      height: 300px;
       padding: 0.6em;
       font-size: 1em;
       border-radius: 5px;
       border: 1px solid #ccc;
-    }
-    #result {
-      font-weight: bold;
-      color: #2a9d8f;
-      margin: 1em 0;
+      writing-mode: vertical-rl;
+      text-orientation: upright;
     }
   </style>
 </head>
@@ -67,6 +64,7 @@
   </div>
 
   <div class="form-group"><label for="model">機種名：</label><input type="text" id="model" placeholder="例：iPhone 14 Pro"></div>
+
   <div class="form-group"><label for="color">カラー：</label>
     <select id="color">
       <option value="">選択してください</option>
@@ -74,8 +72,16 @@
       <option value="シルバー">シルバー</option>
       <option value="ディープパープル">ディープパープル</option>
       <option value="ゴールド">ゴールド</option>
+      <option value="ブルー">ブルー</option>
+      <option value="グリーン">グリーン</option>
+      <option value="レッド">レッド</option>
+      <option value="ミッドナイト">ミッドナイト</option>
+      <option value="スターライト">スターライト</option>
+      <option value="パシフィックブルー">パシフィックブルー</option>
+      <option value="グラファイト">グラファイト</option>
     </select>
   </div>
+
   <div class="form-group"><label for="storage">容量：</label>
     <select id="storage">
       <option value="">選択してください</option>
@@ -86,6 +92,7 @@
       <option value="1TB">1TB</option>
     </select>
   </div>
+
   <div class="form-group"><label for="carrier">キャリア：</label>
     <select id="carrier">
       <option value="">選択してください</option>
