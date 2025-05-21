@@ -1,31 +1,15 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>メルカリ 売れるタイトルメーカー</title>
   <style>
-    body {
-      font-family: 'Helvetica Neue', sans-serif;
-      background: #f5f7fa;
-      padding: 2em;
-      color: #333;
-    }
-    h1 {
-      color: #e63946;
-    }
-    .form-group {
-      display: flex;
-      align-items: center;
-      margin: 1em 0;
-      max-width: 500px;
-    }
-    .form-group label {
-      flex: 0 0 130px;
-      margin-right: 1em;
-    }
-    .form-group input,
-    .form-group select {
+    body { font-family: 'Helvetica Neue', sans-serif; background: #f5f7fa; padding: 2em; color: #333; }
+    h1 { color: #e63946; }
+    .form-group { display: flex; align-items: center; margin: 1em 0; max-width: 600px; }
+    .form-group label { flex: 0 0 150px; margin-right: 1em; }
+    .form-group input, .form-group select {
       flex: 1;
       padding: 0.6em;
       font-size: 1em;
@@ -34,7 +18,7 @@
     }
     textarea, select {
       width: 100%;
-      max-width: 500px;
+      max-width: 600px;
     }
     .button-row {
       display: flex;
@@ -47,7 +31,6 @@
       color: white;
       padding: 0.5em 1em;
       cursor: pointer;
-      transition: background-color 0.3s;
       border-radius: 5px;
       font-size: 0.9em;
       border: none;
@@ -68,9 +51,6 @@
       color: #2a9d8f;
       margin: 1em 0;
     }
-    .template-select {
-      margin-top: 1em;
-    }
   </style>
 </head>
 <body>
@@ -83,108 +63,75 @@
       <option value="iPad">iPad</option>
       <option value="MacBook">MacBook</option>
       <option value="Apple Watch">Apple Watch</option>
-      <option value="その他">その他</option>
     </select>
   </div>
 
-  <div class="form-group"><label for="product">商品名：</label><input type="text" id="product"></div>
-  <div class="form-group"><label for="condition">状態：</label>
-    <select id="condition">
-      <option value="新品">新品</option>
-      <option value="美品">美品</option>
-      <option value="中古">中古</option>
-      <option value="ジャンク">ジャンク</option>
+  <div class="form-group"><label for="model">機種名：</label><input type="text" id="model" placeholder="例：iPhone 14 Pro"></div>
+  <div class="form-group"><label for="color">カラー：</label>
+    <select id="color">
+      <option value="">選択してください</option>
+      <option value="スペースブラック">スペースブラック</option>
+      <option value="シルバー">シルバー</option>
+      <option value="ディープパープル">ディープパープル</option>
+      <option value="ゴールド">ゴールド</option>
     </select>
   </div>
-  <div class="form-group"><label for="brand">ブランド・型番：</label><input type="text" id="brand"></div>
-  <div class="form-group"><label for="accessory">付属品：</label><input type="text" id="accessory" placeholder="例：充電器、説明書など"></div>
+  <div class="form-group"><label for="storage">容量：</label>
+    <select id="storage">
+      <option value="">選択してください</option>
+      <option value="64GB">64GB</option>
+      <option value="128GB">128GB</option>
+      <option value="256GB">256GB</option>
+      <option value="512GB">512GB</option>
+      <option value="1TB">1TB</option>
+    </select>
+  </div>
+  <div class="form-group"><label for="carrier">キャリア：</label>
+    <select id="carrier">
+      <option value="">選択してください</option>
+      <option value="SIMフリー">SIMフリー</option>
+      <option value="docomo">docomo</option>
+      <option value="au">au</option>
+      <option value="SoftBank">SoftBank</option>
+    </select>
+  </div>
 
-  <div class="form-group"><label for="template">説明テンプレ：</label>
-    <select id="template" class="template-select">
-      <option value="basic">基本（ていねい）</option>
-      <option value="casual">カジュアル</option>
-      <option value="short">簡潔（業者風）</option>
-    </select>
-  </div>
+  <div class="form-group"><label for="accessory">付属品：</label><input type="text" id="accessory" placeholder="例：充電ケーブル、箱、説明書など"></div>
+  <div class="form-group"><label for="battery">バッテリー最大容量：</label><input type="text" id="battery" placeholder="例：85〜89%"></div>
+  <div class="form-group"><label for="screen">画面割れ：</label><input type="text" id="screen" placeholder="例：なし"></div>
+  <div class="form-group"><label for="defect">機能不良：</label><input type="text" id="defect" placeholder="例：なし"></div>
 
   <div class="button-row">
-    <button onclick="generateTitleAndDescription()">生成</button>
-    <button onclick="copyToClipboard('result')">タイトルコピー</button>
-    <button onclick="copyToClipboard('description')">説明文コピー</button>
+    <button onclick="generate()">生成</button>
   </div>
 
   <h2>生成結果</h2>
-  <p><strong>タイトル：</strong><span id="result"></span></p>
-  <p><strong>説明文：</strong><br><textarea id="description" rows="10" cols="60"></textarea></p>
+  <textarea id="description" rows="10" cols="60"></textarea>
 
   <script>
-    function generateTitleAndDescription() {
-      const product = document.getElementById('product').value.trim();
-      const condition = document.getElementById('condition').value;
-      const brand = document.getElementById('brand').value.trim();
-      const accessory = document.getElementById('accessory').value.trim();
+    function generate() {
       const series = document.getElementById('series').value;
-      const template = document.getElementById('template').value;
+      const model = document.getElementById('model').value;
+      const color = document.getElementById('color').value;
+      const storage = document.getElementById('storage').value;
+      const carrier = document.getElementById('carrier').value;
+      const accessory = document.getElementById('accessory').value;
+      const battery = document.getElementById('battery').value;
+      const screen = document.getElementById('screen').value;
+      const defect = document.getElementById('defect').value;
 
-      let title = `${condition} ${product}`;
-      if (brand) title += ` ${brand}`;
-      if (accessory && accessory !== 'なし') title += ` ${accessory}`;
-      title += ' 即購入OK 送料無料';
+      let desc = '';
+      if (series) desc += `シリーズ...${series}\\n`;
+      if (model) desc += `機種名...${model}\\n`;
+      if (color) desc += `スマートフォンカラー...${color}\\n`;
+      if (storage) desc += `容量...${storage}\\n`;
+      if (carrier) desc += `購入したキャリア...${carrier}\\n`;
+      if (accessory) desc += `付属品...${accessory}\\n`;
+      if (battery) desc += `バッテリー最大容量...${battery}\\n`;
+      if (screen) desc += `画面割れ...${screen}\\n`;
+      if (defect) desc += `機能不良...${defect}\\n`;
 
-      if (title.length > 40) {
-        title += `\\n（${title.length}文字）※40文字超過`;
-      } else {
-        title += `\\n（${title.length}文字）`;
-      }
-      document.getElementById('result').innerText = title;
-
-      let description = '';
-      if (template === 'basic') {
-        description += `ご覧いただきありがとうございます。\\n\\n`;
-        description += `${product}を出品いたします。\\n\\n`;
-        description += `【商品の状態】\\n- 状態：${condition}`;
-        if (brand) description += `\\n- ブランド・型番：${brand}`;
-        if (series) description += `\\n- シリーズ：${series}`;
-        if (accessory && accessory !== 'なし') {
-          description += `\\n- 付属品：${accessory}`;
-        } else {
-          description += `\\n- 付属品：なし`;
-        }
-        description += `\\n\\n動作確認済み、初期化済みです。\\n\\n即購入歓迎いたします。よろしくお願いいたします。`;
-      } else if (template === 'casual') {
-        description += `ご覧いただきありがとうございます！\\n\\n`;
-        description += `${product}、${condition}です！`;
-        if (brand) description += `\\nブランドは${brand}。`;
-        if (series) description += `\\nシリーズは${series}です。`;
-        if (accessory && accessory !== 'なし') {
-          description += `\\n付属品は${accessory}です！`;
-        } else {
-          description += `\\n付属品はありません。`;
-        }
-        description += `\\n\\nすぐ発送します！質問あれば気軽にどうぞ♪`;
-      } else if (template === 'short') {
-        description += `${product}。${condition}。`;
-        if (brand) description += ` ${brand}。`;
-        if (series) description += ` ${series}。`;
-        if (accessory && accessory !== 'なし') {
-          description += ` 付属品：${accessory}。`;
-        } else {
-          description += ` 付属品：なし。`;
-        }
-        description += `\\n\\n初期化・動作確認済。即購入可。`;
-      }
-
-      document.getElementById('description').value = description;
-    }
-
-    function copyToClipboard(type) {
-      const text = (type === 'result')
-        ? document.getElementById('result').innerText
-        : document.getElementById('description').value;
-
-      navigator.clipboard.writeText(text).then(() => {
-        alert(type === 'result' ? 'タイトルをコピーしました' : '説明文をコピーしました');
-      });
+      document.getElementById('description').value = desc;
     }
   </script>
 </body>
