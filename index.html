@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>メルカリ 売れるタイトルメーカー</title>
   <style>
     body { font-family: 'Helvetica Neue', sans-serif; background: #f5f7fa; padding: 2em; color: #333; }
@@ -123,24 +123,24 @@
       const screen = document.getElementById('screen').value;
       const defect = document.getElementById('defect').value;
 
-      let desc = 'ご覧いただきありがとうございます。\\n\\n';
-      desc += '以下の内容をご確認ください。\\n\\n';
+      let desc = 'ご覧いただきありがとうございます。\n\n';
+      desc += '以下の内容をご確認ください。\n\n';
 
-      if (series) desc += `シリーズ...${series}\\n`;
-      if (model) desc += `機種名...${model}\\n`;
-      if (color) desc += `カラー...${color}\\n`;
-      if (storage) desc += `容量...${storage}\\n`;
-      if (carrier) desc += `キャリア...${carrier}\\n`;
-      if (accessory) desc += `付属品...${accessory}\\n`;
-      if (battery) desc += `バッテリー最大容量...${battery}\\n`;
-      if (screen) desc += `画面割れ...${screen}\\n`;
-      if (defect) desc += `機能不良...${defect}\\n`;
+      if (series) desc += `シリーズ...${series}\n`;
+      if (model) desc += `機種名...${model}\n`;
+      if (color) desc += `カラー...${color}\n`;
+      if (storage) desc += `容量...${storage}\n`;
+      if (carrier) desc += `キャリア...${carrier}\n`;
+      if (accessory) desc += `付属品...${accessory}\n`;
+      if (battery) desc += `バッテリー最大容量...${battery}\n`;
+      if (screen) desc += `画面割れ...${screen}\n`;
+      if (defect) desc += `機能不良...${defect}\n`;
 
-      desc += '\\n・即購入OKです（コメントなしで購入可）\\n';
-      desc += '・できるだけ迅速に発送します\\n';
-      desc += '・写真にあるものがすべてになります\\n';
-      desc += '・トラブル防止のため、ご不明点は購入前にご確認ください\\n';
-      desc += '・あくまで中古品ですので神経質な方はご遠慮ください\\n';
+      desc += '\n・即購入OKです（コメントなしで購入可）\n';
+      desc += '・できるだけ迅速に発送します\n';
+      desc += '・写真にあるものがすべてになります\n';
+      desc += '・トラブル防止のため、ご不明点は購入前にご確認ください\n';
+      desc += '・あくまで中古品ですので神経質な方はご遠慮ください\n';
 
       document.getElementById('description').value = desc;
     }
