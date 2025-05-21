@@ -1,4 +1,4 @@
-// メルカリ 売れるタイトルメーカー（多機能版）
+// メルカリ 売れるタイトルメーカー（多機能版 + 詳細テンプレ対応）
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -19,14 +19,15 @@
       display: flex;
       align-items: center;
       margin: 1em 0;
-      max-width: 500px;
+      max-width: 600px;
     }
     .form-group label {
-      flex: 0 0 130px;
+      flex: 0 0 140px;
       margin-right: 1em;
     }
     .form-group input,
-    .form-group select {
+    .form-group select,
+    .form-group textarea {
       flex: 1;
       padding: 0.6em;
       font-size: 1em;
@@ -35,7 +36,7 @@
     }
     textarea, select {
       width: 100%;
-      max-width: 500px;
+      max-width: 600px;
     }
     .button-row {
       display: flex;
@@ -88,6 +89,7 @@
   </div>
   <div class="form-group"><label for="brand">ブランド・型番：</label><input type="text" id="brand"></div>
   <div class="form-group"><label for="accessory">付属品：</label><input type="text" id="accessory" placeholder="例：充電器、説明書など"></div>
+  <div class="form-group"><label for="extra">備考／詳細情報：</label><textarea id="extra" placeholder="購入時期、使用頻度、ケース、バッテリー状態など"></textarea></div>
 
   <div class="form-group"><label for="template">説明テンプレ：</label>
     <select id="template" class="template-select">
@@ -113,6 +115,7 @@
       const condition = document.getElementById('condition').value;
       const brand = document.getElementById('brand').value.trim();
       const accessory = document.getElementById('accessory').value.trim();
+      const extra = document.getElementById('extra').value.trim();
       const template = document.getElementById('template').value;
 
       let title = `${condition} ${product}`;
@@ -138,7 +141,10 @@
         } else {
           description += `\n- 付属品：なし`;
         }
-        description += `\n\n動作確認済み、初期化済みです。\n\n即購入歓迎いたします。よろしくお願いいたします。`;
+        if (extra) {
+          description += `\n\n${extra}`;
+        }
+        description += `\n\n動作確認済み、初期化済みです。\n即購入歓迎いたします。よろしくお願いいたします。`;
       } else if (template === 'casual') {
         description += `ご覧いただきありがとうございます！\n\n`;
         description += `${product}、${condition}です！`;
@@ -148,6 +154,9 @@
         } else {
           description += `\n付属品はありません。`;
         }
+        if (extra) {
+          description += `\n\n${extra}`;
+        }
         description += `\n\nすぐ発送します！質問あれば気軽にどうぞ♪`;
       } else if (template === 'short') {
         description += `${product}。${condition}。`;
@@ -156,6 +165,9 @@
           description += ` 付属品：${accessory}。`;
         } else {
           description += ` 付属品：なし。`;
+        }
+        if (extra) {
+          description += ` ${extra}`;
         }
         description += `\n\n初期化・動作確認済。即購入可。`;
       }
